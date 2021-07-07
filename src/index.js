@@ -8,45 +8,45 @@ const whatsappButton = document.getElementById("whatsapp");
 const newQuoteButton = document.getElementById("new-quote");
 const loader = document.getElementById("loader");
 
-function loading(){
+function loading() {
     loader.hidden = false;
     quoteContainer.hidden = true;
 }
 
-function complete(){
-    if(!loader.hidden){
+function complete() {
+    if (!loader.hidden) {
         loader.hidden = true;
         quoteContainer.hidden = false;
     }
 }
 
-async function fetchQuote(){
+async function fetchQuote() {
     loading();
-    const url = "http://api.quotable.io/random";
-    try{
+    const url = "https://api.quotable.io/random";
+    try {
         const r = await fetch(url);
         const data = await r.json();
         quoteAuthor.innerText = data.author;
-        if (data.length > 120){
+        if (data.length > 120) {
             quoteContent.classList.add("long-quote");
         }
-        else{
+        else {
             quoteContent.classList.remove("long-quote");
         }
         quoteContent.innerText = data.content;
         complete();
     }
-    catch(e){
+    catch (e) {
         console.log("Error");
     }
 }
 
-function tweetQuote(){
+function tweetQuote() {
     const tweetURL = `https://twitter.com/intent/tweet?text=${quoteContent.innerText}%0a ~ ${quoteAuthor.innerText}`;
     window.open(tweetURL, '_blank');
 }
 
-function whatsappQuote(){
+function whatsappQuote() {
     const whatsappURL = `https://api.whatsapp.com/send?text=${quoteContent.innerText}%0a ~ ${quoteAuthor.innerText}`
     window.open(whatsappURL, '_blank');
 }
